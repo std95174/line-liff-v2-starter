@@ -1,52 +1,8 @@
 <template>
   <div class="home">
     <h1 class="home__title">
-      Welcome to <br/><a
-        class="home__title__link"
-        href="https://developers.line.biz/en/docs/liff/overview/"
-    >LIFF Starter!</a
-    >
+    出席調查問卷
     </h1>
-    <div class="home__badges">
-      <span class="home__badges__badge badge--primary"> LIFF Starter </span>
-      <span class="home__badges__badge badge--secondary"> nuxtjs </span>
-      <span class="home__badges__badge badge--primary"> {{ version }} </span>
-      <a
-          href="https://github.com/line/line-liff-v2-starter"
-          target="_blank"
-          rel="noreferrer"
-          class="home__badges__badge badge--secondary"
-      >
-        GitHub
-      </a>
-    </div>
-    <div class="home__buttons">
-      <a
-          href="https://developers.line.biz/en/docs/liff/developing-liff-apps/"
-          target="_blank"
-          rel="noreferrer"
-          class="home__buttons__button button--primary"
-      >
-        LIFF Documentation
-      </a>
-      <a
-          href="https://liff-playground.netlify.app/"
-          target="_blank"
-          rel="noreferrer"
-          class="home__buttons__button button--tertiary"
-      >
-        LIFF Playground
-      </a>
-      <a
-          href="https://developers.line.biz/console/"
-          target="_blank"
-          rel="noreferrer"
-          class="home__buttons__button button--secondary"
-      >
-        LINE Developers Console
-      </a>
-    </div>
-
     <div>Your token: {{ userToken }}</div>
     <form>
       <label for="isParticipate">是否出席：</label><br>
@@ -217,6 +173,7 @@ body {
 
 <script>
 import packageJson from "../package.json";
+import axios from "axios";
 
 export default {
   data: function () {
@@ -226,14 +183,14 @@ export default {
       liffError: "",
       userToken: "",
       user: {
-        isParticipate: "",
+        isParticipate: false,
         name: ""
       }
     };
   },
   methods: {
     submit: async function () {
-      await this.$http.post(
+      await axios.post(
           "https://ca1a-114-36-17-28.jp.ngrok.io/form",
           this.user,
           {
