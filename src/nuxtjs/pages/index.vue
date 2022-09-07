@@ -1,51 +1,60 @@
 <template>
   <div class="home">
     <h1 class="home__title">
-      Welcome to <br /><a
+      Welcome to <br/><a
         class="home__title__link"
         href="https://developers.line.biz/en/docs/liff/overview/"
-        >LIFF Starter!</a
-      >
+    >LIFF Starter!</a
+    >
     </h1>
     <div class="home__badges">
       <span class="home__badges__badge badge--primary"> LIFF Starter </span>
       <span class="home__badges__badge badge--secondary"> nuxtjs </span>
       <span class="home__badges__badge badge--primary"> {{ version }} </span>
       <a
-        href="https://github.com/line/line-liff-v2-starter"
-        target="_blank"
-        rel="noreferrer"
-        class="home__badges__badge badge--secondary"
+          href="https://github.com/line/line-liff-v2-starter"
+          target="_blank"
+          rel="noreferrer"
+          class="home__badges__badge badge--secondary"
       >
         GitHub
       </a>
     </div>
     <div class="home__buttons">
       <a
-        href="https://developers.line.biz/en/docs/liff/developing-liff-apps/"
-        target="_blank"
-        rel="noreferrer"
-        class="home__buttons__button button--primary"
+          href="https://developers.line.biz/en/docs/liff/developing-liff-apps/"
+          target="_blank"
+          rel="noreferrer"
+          class="home__buttons__button button--primary"
       >
         LIFF Documentation
       </a>
       <a
-        href="https://liff-playground.netlify.app/"
-        target="_blank"
-        rel="noreferrer"
-        class="home__buttons__button button--tertiary"
+          href="https://liff-playground.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+          class="home__buttons__button button--tertiary"
       >
         LIFF Playground
       </a>
       <a
-        href="https://developers.line.biz/console/"
-        target="_blank"
-        rel="noreferrer"
-        class="home__buttons__button button--secondary"
+          href="https://developers.line.biz/console/"
+          target="_blank"
+          rel="noreferrer"
+          class="home__buttons__button button--secondary"
       >
         LINE Developers Console
       </a>
     </div>
+
+    <form>
+      <label for="isParticipate">是否出席：</label><br>
+      <input type="radio" name="isParticipate" value="true">
+      <input type="radio" name="isParticipate" value="false"><br>
+      <label for="name">中文姓名：</label><br>
+      <input type="text" id="name" name="name" placeholder="王聖方"><br><br>
+      <input type="button" value="送出" @click="submit">
+    </form>
   </div>
 </template>
 
@@ -53,7 +62,7 @@
 html,
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -143,7 +152,7 @@ body {
   border-radius: 2px;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .button--primary {
@@ -207,24 +216,32 @@ body {
 
 <script>
 import packageJson from "../package.json";
+
 export default {
-  data: function() {
+  data: function () {
     return {
       version: packageJson.version,
       sdkVersion: "",
-      liffError: ""
+      liffError: "",
+      userToken: "",
     };
   },
-  mounted() {
+  methods: {
+    submit: function () {
+      alert("送出成功");
+    }
+  },
+  async mounted() {
     // mounted() is rendered when DOM is rendered
     // wait liff.init()
     this.$liffInit
-      .then(() => {
-        this.sdkVersion = liff.getVersion();
-      })
-      .catch((error) => {
-        this.liffError = error;
-      });
+        .then(() => {
+          this.sdkVersion = liff.getVersion();
+          this.userToken = liff.getAccessToken();
+        })
+        .catch((error) => {
+          this.liffError = error;
+        });
   }
 };
 </script>
