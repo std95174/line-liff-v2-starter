@@ -50,10 +50,10 @@
     <div>Your token: {{ userToken }}</div>
     <form>
       <label for="isParticipate">是否出席：</label><br>
-      <input type="radio" name="isParticipate" value="true">
-      <input type="radio" name="isParticipate" value="false"><br>
+      <input type="radio" name="isParticipate" value="true" v-model="user.isParticipate">
+      <input type="radio" name="isParticipate" value="false" v-model="user.isParticipate"><br>
       <label for="name">中文姓名：</label><br>
-      <input type="text" id="name" name="name" placeholder="王聖方"><br><br>
+      <input type="text" id="name" name="name" placeholder="王聖方" v-model="user.name"><br>
       <input type="button" value="送出" @click="submit">
     </form>
   </div>
@@ -225,21 +225,22 @@ export default {
       sdkVersion: "",
       liffError: "",
       userToken: "",
+      user: {
+        isParticipate: "",
+        name: ""
+      }
     };
   },
   methods: {
     submit: async function () {
       await this.$http.post(
-        "https://ca1a-114-36-17-28.jp.ngrok.io/form",
-        {
-          isParticipate: document.querySelector('input[name="isParticipate"]:checked').value,
-          name: document.getElementById("name").value,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.userToken}`,
-          },
-        }
+          "https://ca1a-114-36-17-28.jp.ngrok.io/form",
+          this.user,
+          {
+            headers: {
+              Authorization: `Bearer ${this.userToken}`,
+            },
+          }
       );
       alert("送出成功");
     }
