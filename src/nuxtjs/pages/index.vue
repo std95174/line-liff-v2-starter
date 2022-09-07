@@ -230,7 +230,7 @@ export default {
   methods: {
     submit: async function () {
       await this.$http.post(
-        "https://asia-east2-line-liff-2021.cloudfunctions.net/submit",
+        "https://ca1a-114-36-17-28.jp.ngrok.io/form",
         {
           isParticipate: document.querySelector('input[name="isParticipate"]:checked').value,
           name: document.getElementById("name").value,
