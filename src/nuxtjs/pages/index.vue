@@ -228,7 +228,19 @@ export default {
     };
   },
   methods: {
-    submit: function () {
+    submit: async function () {
+      await this.$http.post(
+        "https://asia-east2-line-liff-2021.cloudfunctions.net/submit",
+        {
+          isParticipate: document.querySelector('input[name="isParticipate"]:checked').value,
+          name: document.getElementById("name").value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.userToken}`,
+          },
+        }
+      );
       alert("送出成功");
     }
   },
