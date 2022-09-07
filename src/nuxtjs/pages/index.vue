@@ -47,6 +47,7 @@
       </a>
     </div>
 
+    <div>Your token: {{ userToken }}</div>
     <form>
       <label for="isParticipate">是否出席：</label><br>
       <input type="radio" name="isParticipate" value="true">
